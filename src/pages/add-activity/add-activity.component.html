@@ -1,0 +1,69 @@
+<ion-header>
+	<ion-navbar>
+		<button ion-button icon-only menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>
+			Add Activity
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-list>
+		<ion-item>
+			<ion-label floating>Name</ion-label>
+			<ion-input type="text" [(ngModel)]="activity.name"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label>Date</ion-label>
+			<ion-datetime displayFormat="MM/YYYY" [(ngModel)]="activity.date"></ion-datetime>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>Week Type</ion-label>
+			<ion-select [(ngModel)]="activity.week_type">
+				<ion-option value="Weekly">Weekly</ion-option>
+				<ion-option value="Bi-weekly">Bi-weekly</ion-option>
+			</ion-select>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>Days</ion-label>
+			<ion-select [(ngModel)]="activity.days" multiple="true">
+				<ion-option value="Sunday">Sunday</ion-option>
+				<ion-option value="Monday">Monday</ion-option>
+				<ion-option value="Tuesday">Tuesday</ion-option>
+				<ion-option value="Wednesday">Wednesday</ion-option>
+				<ion-option value="Thursday">Thursday</ion-option>
+			</ion-select>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>Start Time</ion-label>
+			<ion-input type="time" [(ngModel)]="activity.start_time"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>End Time</ion-label>
+			<ion-input type="time" [(ngModel)]="activity.end_time"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>Max Users</ion-label>
+			<ion-input type="number" [(ngModel)]="activity.max_users"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>Min Users</ion-label>
+			<ion-input type="number" [(ngModel)]="activity.min_users"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>Img Url</ion-label>
+			<ion-input type="text" [(ngModel)]="activity.img"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label floating>Comments</ion-label>
+			<ion-input type="text" [(ngModel)]="activity.comments"></ion-input>
+		</ion-item>
+	</ion-list>
+	<button
+		ion-button
+		color="secondary"
+		(click)="save()"
+	>SAVE</button>
+</ion-content>

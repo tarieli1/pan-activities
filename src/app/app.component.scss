@@ -1,0 +1,17 @@
+ion-icon {
+  font-size: 2em;
+  padding-left: 10px;
+}
+.toast-message {
+  border-radius: 4px;
+}
+.toaster-success {
+  .toast-message {
+    background-color: #6bad07;
+  }
+}
+.toaster-error {
+  .toast-message {
+    background-color: #ce0202;
+  }
+}

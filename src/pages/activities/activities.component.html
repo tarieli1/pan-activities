@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Activities
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let activity of activities" (click)="enterActivity(activity)">
+      <ion-thumbnail item-left>
+        <img [src]="activity.img">
+      </ion-thumbnail>
+      <h2>{{activity.name}}</h2>
+      <p>{{activity.days}} {{activity.week_type}}</p>
+    </ion-item>
+  </ion-list>
+  <div *ngIf="isAdmin">
+    <button ion-button (click)="exportToCsv()">Export to CSV</button>
+  </div>
+</ion-content>

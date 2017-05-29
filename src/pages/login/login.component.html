@@ -1,0 +1,22 @@
+<ion-content>
+	<ion-grid>
+		<ion-row>
+			<ion-col col-12>Enter your employee number</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-12>
+				<ion-input type="number" [(ngModel)]="id"></ion-input>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-12>
+				<button ion-button round (click)="login()">Login</button>
+			</ion-col>
+		</ion-row>
+		<ion-row *ngIf="userExist === false">
+			<ion-col col-12>
+				Employee id does not exist in our system, please try again.
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>

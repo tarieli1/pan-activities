@@ -1,0 +1,43 @@
+<ion-header>
+	<ion-navbar>
+		<button ion-button icon-only menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>
+			{{activity.name}}
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-card>
+		<ion-card-content>
+			<ion-card-title>
+				Each {{activity.days}}, {{activity.week_type}}
+				At {{activity.start_time}}
+			</ion-card-title>
+			<p>{{activity.comments}}</p>
+		</ion-card-content>
+	</ion-card>
+	<button
+		[disabled]="isRegistered"
+		ion-button
+		color="secondary"
+		(click)="register()"
+	>Register</button>
+	<button
+		*ngIf="isAdmin"
+		ion-button
+		color="danger"
+		(click)="removeActivity()"
+	>Delete Activity</button>
+	<h3 *ngIf="registeredUsers && registeredUsers.length">Registered</h3>
+	<ion-list>
+		<ion-item *ngFor="let user of registeredUsers">
+			<ion-avatar item-left>
+				<img src="../../../assets/img/user.png">
+			</ion-avatar>
+			<h2>{{user.user_name}}</h2>
+		</ion-item>
+	</ion-list>
+</ion-content>
