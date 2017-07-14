@@ -39,7 +39,7 @@ export class UtilsService {
       case 'board games':
         break;
       default:
-        path = '../../../assets/img/logo.png'
+        path = '../../../assets/img/logo.png';
         break;
     }
 
