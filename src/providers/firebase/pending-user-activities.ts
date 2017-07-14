@@ -13,8 +13,9 @@ export class PendingUserActivitiesProvider {
     this.date = utils.date;
   }
 
-  register(activity: Activity, user: User) {
+  register(activity: Activity, user: User, comments: string) {
     const obj = {
+      comments,
       date: this.date,
       activity_key: activity.$key,
       activity_name: activity.name,

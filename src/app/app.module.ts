@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { File } from '@ionic-native/file';
-import { Push } from '@ionic-native/push';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -11,6 +10,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 
+import { config } from '../config';
 import {
   UserProvider,
   UserActivitiesProvider,
@@ -19,10 +19,9 @@ import {
   CsvService,
   UtilsService,
   EmailService,
-  PushService,
 } from '../providers';
 
-import { MyApp } from './app.component';
+import { PanActivitiesComponent } from './app.component';
 import {
   ActivitiesComponent,
   ActivityComponent,
@@ -30,32 +29,24 @@ import {
   LoginComponent,
   AddActivityComponent,
 } from '../pages';
-import { AuthGuard, ToasterService } from '../shared';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyC5nxjllDIqq_zoi5u7X3tMiTeoB-lSIaQ",
-  authDomain: "pan-activities.firebaseapp.com",
-  databaseURL: "https://pan-activities.firebaseio.com",
-  projectId: "pan-activities",
-  storageBucket: "pan-activities.appspot.com",
-  messagingSenderId: "425195188130"
-};
+import { AuthGuard, ToasterService, CamelCasePipe } from '../shared';
 
 @NgModule({
   declarations: [
-    MyApp,
+    PanActivitiesComponent,
     ActivitiesComponent,
     ActivityComponent,
     MyActivitiesComponent,
     LoginComponent,
     AddActivityComponent,
+    CamelCasePipe,
   ],
   imports: [
     BrowserModule,
     HttpModule,
     AngularFireDatabaseModule,
-    AngularFireModule.initializeApp(firebaseConfig),
-    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(config.firebaseConfig),
+    IonicModule.forRoot(PanActivitiesComponent, { backButtonText: '' }),
     IonicStorageModule.forRoot({
       name: '__mydb',
       driverOrder: ['indexeddb', 'sqlite', 'websql']
@@ -63,7 +54,7 @@ const firebaseConfig = {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
+    PanActivitiesComponent,
     ActivitiesComponent,
     ActivityComponent,
     MyActivitiesComponent,
@@ -80,13 +71,12 @@ const firebaseConfig = {
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ToasterService,
     AuthGuard,
+    CamelCasePipe,
     File,
     EmailComposer,
     CsvService,
     UtilsService,
     EmailService,
-    Push,
-    PushService,
   ]
 })
 export class AppModule {}

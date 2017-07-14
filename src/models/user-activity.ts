@@ -4,4 +4,5 @@ export interface UserActivity {
   activity_key: string;
   user_name: string;
   date: string;
+  comments: string;
 }

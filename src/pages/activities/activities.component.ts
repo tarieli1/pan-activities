@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import {
@@ -7,6 +7,7 @@ import {
   UserActivitiesProvider,
   CsvService,
   EmailService,
+  UtilsService,
 } from '../../providers';
 import { ActivityComponent } from './activity';
 import { Activity, User } from '../../models';
@@ -15,7 +16,7 @@ import { AuthGuard } from '../../shared';
 @Component({
   templateUrl: 'activities.component.html'
 })
-export class ActivitiesComponent implements OnInit {
+export class ActivitiesComponent implements OnInit, OnDestroy {
 
   activities: Activity[];
   user: User;
@@ -32,12 +33,8 @@ export class ActivitiesComponent implements OnInit {
     public emailService: EmailService,
     public userActivitiesProvider: UserActivitiesProvider,
     public storage: Storage,
-    public loadingCtrl: LoadingController,
-  ) {
-    this.loading = this.loadingCtrl.create({
-      spinner: 'crescent',
-    });
-  }
+    public utilsService: UtilsService,
+  ) {}
 
   ngOnInit() {
     this.sub = this.activitiesProvider.getActivities()
@@ -51,10 +48,11 @@ export class ActivitiesComponent implements OnInit {
   }
 
   ionViewCanEnter() {
-    this.auth.canActivate(this.navCtrl);
+    this.auth.canActivate(this.navCtrl, ['admin', 'user']);
   }
 
   exportToCsv() {
+    this.loading = this.utilsService.createLoader();
     this.loading.present();
     this.usersActivitiesSub = this.userActivitiesProvider.getUsersActivities()
       .subscribe((usersActivities) => {
@@ -69,6 +67,10 @@ export class ActivitiesComponent implements OnInit {
 
   enterActivity(activity) {
     this.navCtrl.push(ActivityComponent, { activity, user: this.user });
+  }
+
+  getImg(name: string) {
+    return this.utilsService.getActivityImage(name);
   }
 
   ngOnDestroy() {

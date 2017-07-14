@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
-import { ActivitiesProvider } from '../../providers';
-import { ToasterService } from '../../shared';
+import { ActivitiesProvider, UtilsService } from '../../providers';
+import { ToasterService, AuthGuard } from '../../shared';
 
 @Component({
   templateUrl: 'add-activity.component.html'
@@ -10,20 +10,23 @@ import { ToasterService } from '../../shared';
 export class AddActivityComponent {
 
   loading: any;
-  activity = {};
+  activity: object = {};
 
   constructor(
     public navCtrl: NavController,
-    public loadingCtrl: LoadingController,
+    public utilsService: UtilsService,
     public toast: ToasterService,
     public activitiesProvider: ActivitiesProvider,
+    public auth: AuthGuard,
   ) {
-    this.loading = this.loadingCtrl.create({
-      spinner: 'crescent',
-    });
+  }
+
+  ionViewCanEnter() {
+    this.auth.canActivate(this.navCtrl, ['admin']);
   }
 
   save() {
+    this.loading = this.utilsService.createLoader();
     this.loading.present();
     this.activitiesProvider.addActivity(this.activity);
     this.loading.dismiss();

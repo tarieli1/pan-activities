@@ -1,22 +1,23 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { Component, OnDestroy } from '@angular/core';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 
-import { UserActivitiesProvider, ActivitiesProvider, PendingUserActivitiesProvider } from '../../../providers';
+import { UserActivitiesProvider, ActivitiesProvider, PendingUserActivitiesProvider, UtilsService } from '../../../providers';
 import { AuthGuard, ToasterService } from '../../../shared';
 import { User, Activity, UserActivity } from '../../../models';
 
 @Component({
   templateUrl: 'activity.component.html',
 })
-export class ActivityComponent {
+export class ActivityComponent implements OnDestroy {
 
   loading: any;
   registeredUsersSub: any;
   user: User;
   activity: Activity;
   registeredUsers: UserActivity[];
-  isRegistered = false;
-  isAdmin = false;
+  isRegistered: boolean = false;
+  isAdmin: boolean = false;
+  alert: any;
 
   constructor(
     public navCtrl: NavController,
@@ -26,11 +27,9 @@ export class ActivityComponent {
     public pendingUserActivitiesProvider: PendingUserActivitiesProvider,
     public auth: AuthGuard,
     public toast: ToasterService,
-    public loadingCtrl: LoadingController,
+    public utilsService: UtilsService,
+    private alertCtrl: AlertController,
   ) {
-    this.loading = this.loadingCtrl.create({
-      spinner: 'crescent',
-    });
     this.activity = this.params.get('activity');
     this.user = this.params.get('user');
     this.isAdmin = this.user.role === 'admin';
@@ -38,10 +37,11 @@ export class ActivityComponent {
   }
 
   ionViewCanEnter() {
-    this.auth.canActivate(this.navCtrl);
+    this.auth.canActivate(this.navCtrl, ['admin', 'user']);
   }
 
   getUsersByActivity() {
+    this.loading = this.utilsService.createLoader();
     this.loading.present();
     this.registeredUsersSub = this.userActivitiesProvider.getUsersByActivity()
       .subscribe((usersActivities) => {
@@ -52,12 +52,40 @@ export class ActivityComponent {
       });
   }
 
-  register() {
+  onRegister() {
+    this.alert = this.alertCtrl.create({
+      title: 'Register',
+      inputs: [
+        {
+          name: 'comments',
+          placeholder: 'Comments',
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Register',
+          handler: data => {
+            this.register(data.comments);
+          }
+        }
+      ]
+    });
+    this.alert.present();
+  }
+
+  register(comments: string) {
     if (this.registeredUsers.length < this.activity.max_users) {
-      this.userActivitiesProvider.register(this.activity, this.user);
+      this.userActivitiesProvider.register(this.activity, this.user, comments);
       this.toast.presentToast(`Successfully registered ${this.activity.name}`);
     } else {
-      this.pendingUserActivitiesProvider.register(this.activity, this.user);
+      this.pendingUserActivitiesProvider.register(this.activity, this.user, comments);
       this.toast.presentToast(
         `${this.activity.name} activity is currently full,
          you were added to pending list and waiting for

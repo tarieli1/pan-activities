@@ -19,23 +19,28 @@
 			<p>{{activity.comments}}</p>
 		</ion-card-content>
 	</ion-card>
-	<button
-		[disabled]="isRegistered"
-		ion-button
-		color="secondary"
-		(click)="register()"
-	>Register</button>
-	<button
-		*ngIf="isAdmin"
-		ion-button
-		color="danger"
-		(click)="removeActivity()"
-	>Delete Activity</button>
-	<h3 *ngIf="registeredUsers && registeredUsers.length">Registered</h3>
+	<div padding>
+		<button
+			block
+			[disabled]="isRegistered"
+			ion-button
+			class="successBtn"
+			(click)="onRegister()"
+		>Register</button>
+	</div>
+	<div padding *ngIf="isAdmin">
+		<button
+			block
+			ion-button
+			color="danger"
+			(click)="removeActivity()"
+		>Delete Activity</button>
+	</div>
+	<h5 *ngIf="registeredUsers && registeredUsers.length" padding>Registered</h5>
 	<ion-list>
 		<ion-item *ngFor="let user of registeredUsers">
 			<ion-avatar item-left>
-				<img src="../../../assets/img/user.png">
+				<ion-icon name="contact"></ion-icon>
 			</ion-avatar>
 			<h2>{{user.user_name}}</h2>
 		</ion-item>

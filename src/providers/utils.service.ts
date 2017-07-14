@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
+import { LoadingController } from 'ionic-angular';
 
 @Injectable()
 export class UtilsService {
 
   month: any;
   now: Date;
+
+  constructor(public loadingCtrl: LoadingController) {}
 
   get date() {
     this.now = new Date();
@@ -15,4 +18,21 @@ export class UtilsService {
     return `${this.now.getFullYear()}-${this.month}`;
   }
 
+  createLoader() {
+    return this.loadingCtrl.create({ spinner: 'crescent' });
+  }
+
+  getActivityImage(activityName: string) {
+    let path = '';
+    switch (activityName.toLowerCase()) {
+      case 'soccer':
+        path = '../../../assets/img/soccer.jpg';
+        break;
+      default:
+        path = '../../../assets/img/logo.png'
+        break;
+    }
+
+    return path;
+  }
 }

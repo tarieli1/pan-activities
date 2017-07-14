@@ -1,10 +1,15 @@
 <ion-menu [content]="content">
-	<ion-content>
+	<ion-content class="pan-background">
 		<ion-list>
-			<button ion-item *ngFor="let page of pages; let lst = last" (click)="openPage(page)"><!--[disabled]="!isAdmin && lst"-->
-				{{page.title}}
+			<button
+				class="pan-menu-button"
+				ion-item
+				*ngFor="let page of pages; let lst = last"
+				[disabled]="!isAdmin && lst"
+				(click)="openPage(page)"
+			>{{page.title}}
 			</button>
-			<button ion-item (click)="logout()">Logout</button>
+			<button class="pan-menu-button" ion-item (click)="logout()">Logout</button>
 		</ion-list>
 	</ion-content>
 </ion-menu>

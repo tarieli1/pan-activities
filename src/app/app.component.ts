@@ -15,7 +15,7 @@ import { User } from "../models";
 @Component({
   templateUrl: 'app.component.html',
 })
-export class MyApp {
+export class PanActivitiesComponent {
 
   @ViewChild(Nav) nav: Nav;
 

@@ -8,9 +8,9 @@ export class AuthGuard {
 
   constructor(public storage: Storage) {}
 
-  canActivate(navCtrl) {
+  canActivate(navCtrl: any, roles: any) {
     this.storage.get('user').then((user) => {
-      if (!user) {
+      if (!user || !roles.includes(user.role)) {
         navCtrl.setRoot(LoginComponent, { expired: true });
       }
     });

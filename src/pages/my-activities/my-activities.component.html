@@ -11,8 +11,15 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let activity of userActivities">
+    <ion-item
+      *ngFor="let activity of userActivities"
+      (click)="enterActivity(activity.activity_key)"
+    >
       <h2>{{activity.activity_name}}</h2>
     </ion-item>
   </ion-list>
+  <div padding class="no-data" *ngIf="!userActivities">
+    <ion-icon name="remove-circle"></ion-icon>
+    <p>There are no activities you are registered for this month</p>
+  </div>
 </ion-content>

@@ -1,0 +1,9 @@
+.export-btn {
+  background-color: #55b9ff;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+}
+.export-btn.activated {
+  background-color: #74c2f9;
+}

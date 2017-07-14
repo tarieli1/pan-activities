@@ -15,3 +15,35 @@ ion-icon {
     background-color: #ce0202;
   }
 }
+.successBtn {
+  background-color: #a8c438;
+}
+.button-ios.activated, .button-md.activated {
+  background-color: #c9e84a;
+}
+.pan-background {
+  background-color: #55b9ff;
+
+  .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
+    border-bottom: 0.55px solid #fff;
+  }
+  .pan-menu-button {
+    background-color: #55b9ff;
+    color: white;
+
+    .item-inner {
+      border-bottom: 0.55px solid #fff;
+    }
+  }
+}
+ion-app.ios [padding], ion-app.ios [padding] .scroll-content,
+ion-app.md [padding], ion-app.md [padding] .scroll-content {
+  padding: 2px 16px;
+}
+ion-nav .toolbar-background {
+  background-color: #55b9ff;
+  border-bottom-color: #55b9ff !important;
+}
+ion-header ion-icon, ion-nav .toolbar-title {
+  color: white;
+}

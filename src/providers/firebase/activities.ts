@@ -21,11 +21,15 @@ export class ActivitiesProvider {
     });
   }
 
-  addActivity(activity) {
+  getActivity(activityKey: string) {
+    return this.afd.object(`/activities/${activityKey}`);
+  }
+
+  addActivity(activity: any) {
     this.afd.list('/activities').push(activity);
   }
 
-  removeActivity(id) {
+  removeActivity(id: string) {
     this.afd.list('/activities').remove(id);
   }
 }

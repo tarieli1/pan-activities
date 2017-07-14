@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
-import { UserProvider } from '../../providers';
+import { UserProvider, UtilsService } from '../../providers';
 import { ToasterService } from '../../shared';
 import { ActivitiesComponent } from '../../pages';
 
 @Component({
-  templateUrl: 'login.component.html'
+  templateUrl: 'login.component.html',
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   id: number;
-  userExist: boolean;
   loading: any;
   sub: any;
 
@@ -21,12 +20,9 @@ export class LoginComponent implements OnInit {
     public params: NavParams,
     public userProvider: UserProvider,
     public storage: Storage,
-    public loadingCtrl: LoadingController,
+    public utilsService: UtilsService,
     public toast: ToasterService,
   ) {
-    this.loading = this.loadingCtrl.create({
-      spinner: 'crescent',
-    });
   }
 
   ngOnInit() {
@@ -37,15 +33,15 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.loading = this.utilsService.createLoader();
     this.loading.present();
     this.sub = this.userProvider.getUser(this.id).subscribe((user => {
       this.loading.dismiss();
       if (user.$exists()) {
         this.storage.set('user', user);
-        this.userExist = true;
         this.navCtrl.setRoot(ActivitiesComponent);
       } else {
-        this.userExist = false
+        this.toast.presentToast('Employee id does not exist in our system, please try again', false, 5000);
       }
     }));
   }
