@@ -5,10 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireModule } from 'angularfire2';
 
-import { config } from '../config';
 import { CoreModule } from '../core/core.module';
 import { PanActivitiesComponent } from './app.component';
 import {
@@ -38,8 +35,6 @@ const COMPONENTS = [
     BrowserModule,
     HttpModule,
     CoreModule,
-    AngularFireDatabaseModule,
-    AngularFireModule.initializeApp(config.firebaseConfig),
     IonicModule.forRoot(PanActivitiesComponent, { backButtonText: '' }),
     IonicStorageModule.forRoot({
       name: '__mydb',

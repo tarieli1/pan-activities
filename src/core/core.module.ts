@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { File } from '@ionic-native/file';
 import { EmailComposer } from '@ionic-native/email-composer';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireModule } from 'angularfire2';
 
+import { config } from '../config';
 import {
   CsvService,
   EmailService,
@@ -30,6 +33,10 @@ const PROVIDERS = [
 ];
 
 @NgModule({
+  imports: [
+    AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(config.firebaseConfig),
+  ],
   providers: [
     ...SERVICES,
     ...PROVIDERS,
