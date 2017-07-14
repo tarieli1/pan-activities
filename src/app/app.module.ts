@@ -7,6 +7,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 
 import { CoreModule } from '../core/core.module';
+import { SharedModule } from '../shared/shared.module';
 import { PanActivitiesComponent } from './app.component';
 import {
   ActivitiesComponent,
@@ -15,7 +16,6 @@ import {
   LoginComponent,
   AddActivityComponent,
 } from '../pages';
-import { AuthGuard, CamelCasePipe } from '../shared';
 
 const COMPONENTS = [
   PanActivitiesComponent,
@@ -29,12 +29,12 @@ const COMPONENTS = [
 @NgModule({
   declarations: [
     ...COMPONENTS,
-    CamelCasePipe,
   ],
   imports: [
     BrowserModule,
     HttpModule,
     CoreModule,
+    SharedModule,
     IonicModule.forRoot(PanActivitiesComponent, { backButtonText: '' }),
     IonicStorageModule.forRoot({
       name: '__mydb',
@@ -49,8 +49,6 @@ const COMPONENTS = [
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    AuthGuard,
-    CamelCasePipe,
   ]
 })
 export class AppModule {}
