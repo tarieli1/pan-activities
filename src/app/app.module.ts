@@ -6,8 +6,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 
-import { CoreModule } from '../core/core.module';
-import { SharedModule } from '../shared/shared.module';
 import { PanActivitiesComponent } from './app.component';
 import {
   ActivitiesComponent,
@@ -16,6 +14,8 @@ import {
   LoginComponent,
   AddActivityComponent,
 } from '../pages';
+import { CoreModule } from '../core/core.module';
+import { SharedModule } from '../shared/shared.module';
 
 const COMPONENTS = [
   PanActivitiesComponent,
