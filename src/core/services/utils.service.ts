@@ -28,6 +28,16 @@ export class UtilsService {
       case 'soccer':
         path = '../../../assets/img/soccer.jpg';
         break;
+      case 'pilates':
+        break;
+      case 'hiit':
+        break;
+      case 'ping pong':
+        break;
+      case 'running/fitness group':
+        break;
+      case 'board games':
+        break;
       default:
         path = '../../../assets/img/logo.png'
         break;
