@@ -8,7 +8,7 @@ import {
   CsvService,
   EmailService,
   UtilsService,
-} from '../../providers';
+} from '../../core';
 import { ActivityComponent } from './activity';
 import { Activity, User } from '../../models';
 import { AuthGuard } from '../../shared';

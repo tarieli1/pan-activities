@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 
-import { UtilsService } from '../utils.service';
+import { UtilsService } from '../services';
 import { User, Activity } from '../../models';
 
 @Injectable()

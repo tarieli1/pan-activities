@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { ActivitiesProvider, UtilsService } from '../../providers';
-import { ToasterService, AuthGuard } from '../../shared';
+import { ActivitiesProvider, UtilsService, ToasterService } from '../../core';
+import { AuthGuard } from '../../shared';
 
 @Component({
   templateUrl: 'add-activity.component.html'

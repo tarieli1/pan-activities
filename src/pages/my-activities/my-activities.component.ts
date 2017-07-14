@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
-import { UserActivitiesProvider, ActivitiesProvider, UtilsService } from '../../providers';
+import { UserActivitiesProvider, ActivitiesProvider, UtilsService } from '../../core';
 import { AuthGuard } from '../../shared';
 import { User, UserActivity } from '../../models';
 import { ActivityComponent } from '../activities';

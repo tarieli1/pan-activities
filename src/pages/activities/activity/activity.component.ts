@@ -1,8 +1,14 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 
-import { UserActivitiesProvider, ActivitiesProvider, PendingUserActivitiesProvider, UtilsService } from '../../../providers';
-import { AuthGuard, ToasterService } from '../../../shared';
+import {
+  UserActivitiesProvider,
+  ActivitiesProvider,
+  PendingUserActivitiesProvider,
+  UtilsService,
+  ToasterService,
+} from '../../../core';
+import { AuthGuard } from '../../../shared';
 import { User, Activity, UserActivity } from '../../../models';
 
 @Component({

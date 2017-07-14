@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
-import { UserProvider, UtilsService } from '../../providers';
-import { ToasterService } from '../../shared';
+import { UserProvider, UtilsService, ToasterService } from '../../core';
 import { ActivitiesComponent } from '../../pages';
 
 @Component({
