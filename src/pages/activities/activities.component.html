@@ -12,9 +12,9 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let activity of activities" (click)="enterActivity(activity)">
-      <ion-avatar item-start>
+      <ion-thumbnail item-left>
         <img [src]="activity.img || getImg(activity.name)">
-      </ion-avatar>
+      </ion-thumbnail>
       <h2>{{activity.name | camelCase}}</h2>
       <p>{{activity.days}} - {{activity.week_type}}</p>
     </ion-item>

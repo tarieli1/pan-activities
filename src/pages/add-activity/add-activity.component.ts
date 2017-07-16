@@ -10,7 +10,18 @@ import { AuthGuard } from '../../shared';
 export class AddActivityComponent {
 
   loading: any;
-  activity: object = {};
+  activity: object = {
+    name: '',
+    date: this.utilsService.date,
+    img: '',
+    week_type: 'Weekly',
+    days: '',
+    start_time: '',
+    end_time: '',
+    max_users: 14,
+    min_users: 1,
+    comments: '',
+  };
 
   constructor(
     public navCtrl: NavController,

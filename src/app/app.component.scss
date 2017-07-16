@@ -1,3 +1,5 @@
+@import '../theme/colors';
+
 ion-icon {
   font-size: 2em;
   padding-left: 10px;
@@ -7,28 +9,28 @@ ion-icon {
 }
 .toaster-success {
   .toast-message {
-    background-color: #6bad07;
+    background-color: $success-btn;
   }
 }
 .toaster-error {
   .toast-message {
-    background-color: #ce0202;
+    background-color: $error;
   }
 }
 .successBtn {
-  background-color: #a8c438;
+  background-color: $success-btn;
 }
-.button-ios.activated, .button-md.activated {
-  background-color: #c9e84a;
+.successBtn.activated {
+  background-color: $success-btn-activated;
 }
 .pan-background {
-  background-color: #55b9ff;
+  background-color: $pan-theme;
 
   .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
     border-bottom: 0.55px solid #fff;
   }
   .pan-menu-button {
-    background-color: #55b9ff;
+    background-color: $pan-theme;
     color: white;
 
     .item-inner {
@@ -41,9 +43,13 @@ ion-app.md [padding], ion-app.md [padding] .scroll-content {
   padding: 2px 16px;
 }
 ion-nav .toolbar-background {
-  background-color: #55b9ff;
-  border-bottom-color: #55b9ff !important;
+  background-color: $pan-theme;
+  border-bottom-color: $pan-theme !important;
 }
 ion-header ion-icon, ion-nav .toolbar-title {
-  color: white;
+  color: #fff;
+}
+.item-ios ion-thumbnail ion-img, .item-ios ion-thumbnail img {
+  width: 76px;
+  height: 66px;
 }

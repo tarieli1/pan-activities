@@ -21,12 +21,39 @@
 	</ion-card>
 	<div padding>
 		<button
+			*ngIf="canRegister()"
 			block
-			[disabled]="isRegistered"
 			ion-button
 			class="successBtn"
 			(click)="onRegister()"
 		>Register</button>
+	</div>
+	<div padding>
+		<button
+			*ngIf="isRegistered && !isPending"
+			block
+			ion-button
+			color="light"
+			(click)="cancelRegistration()"
+		>Cancel Registration</button>
+	</div>
+	<div padding>
+		<button
+			*ngIf="canPending()"
+			block
+			ion-button
+			class="successBtn"
+			(click)="onRegister()"
+		>Register to Waiting List</button>
+	</div>
+	<div padding>
+		<button
+			*ngIf="isPending && !isRegistered"
+			block
+			ion-button
+			color="light"
+			(click)="cancelPending()"
+		>Cancel Waiting List</button>
 	</div>
 	<div padding *ngIf="isAdmin">
 		<button

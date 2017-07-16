@@ -32,4 +32,8 @@ export class PendingUserActivitiesProvider {
       }
     });
   }
+
+  removePendingUser(id: string) {
+    this.afd.list('/pending_user_activities').remove(id);
+  }
 }

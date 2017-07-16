@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 
-import { UtilsService } from '../services/utils.service';
+import { UtilsService } from '../services';
 import { User, Activity } from '../../models';
 
 @Injectable()
@@ -39,5 +39,9 @@ export class UserActivitiesProvider {
         equalTo: this.date,
       }
     });
+  }
+
+  removeUserActivity(id: string) {
+    this.afd.list('/user_activities').remove(id);
   }
 }

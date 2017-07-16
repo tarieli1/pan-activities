@@ -16,14 +16,15 @@ import { User, Activity, UserActivity } from '../../../models';
 })
 export class ActivityComponent implements OnDestroy {
 
-  loading: any;
   registeredUsersSub: any;
+  pendingUsersSub: any;
   user: User;
   activity: Activity;
-  registeredUsers: UserActivity[];
+  registeredUsers: UserActivity[] = [];
+  pendingUsers: UserActivity[] = [];
   isRegistered: boolean = false;
+  isPending: boolean = false;
   isAdmin: boolean = false;
-  alert: any;
 
   constructor(
     public navCtrl: NavController,
@@ -40,6 +41,7 @@ export class ActivityComponent implements OnDestroy {
     this.user = this.params.get('user');
     this.isAdmin = this.user.role === 'admin';
     this.getUsersByActivity();
+    this.getPendingUsersByActivity();
   }
 
   ionViewCanEnter() {
@@ -47,19 +49,31 @@ export class ActivityComponent implements OnDestroy {
   }
 
   getUsersByActivity() {
-    this.loading = this.utilsService.createLoader();
-    this.loading.present();
+    const loading = this.utilsService.createLoader();
+    loading.present();
     this.registeredUsersSub = this.userActivitiesProvider.getUsersByActivity()
       .subscribe((usersActivities) => {
         this.registeredUsers = usersActivities.filter(x => x.activity_key === this.activity.$key);
         const user = this.registeredUsers.find(x => x.user_name === this.user.name);
         this.isRegistered = typeof user !== 'undefined';
-        this.loading.dismiss();
+        loading.dismiss();
+      });
+  }
+
+  getPendingUsersByActivity() {
+    const loading = this.utilsService.createLoader();
+    loading.present();
+    this.pendingUsersSub = this.pendingUserActivitiesProvider.getPendingUserActivities()
+      .subscribe((pendingUsers) => {
+        this.pendingUsers = pendingUsers.filter(x => x.activity_key === this.activity.$key);
+        const user = this.pendingUsers.find(x => x.user_name === this.user.name);
+        this.isPending = typeof user !== 'undefined';
+        loading.dismiss();
       });
   }
 
   onRegister() {
-    this.alert = this.alertCtrl.create({
+    const alert = this.alertCtrl.create({
       title: 'Register',
       inputs: [
         {
@@ -83,7 +97,7 @@ export class ActivityComponent implements OnDestroy {
         }
       ]
     });
-    this.alert.present();
+    alert.present();
   }
 
   register(comments: string) {
@@ -101,16 +115,40 @@ export class ActivityComponent implements OnDestroy {
     this.navCtrl.pop();
   }
 
+  cancelRegistration() {
+    const userActivity = this.registeredUsers.find(x => x.user_name === this.user.name);
+    this.userActivitiesProvider.removeUserActivity(userActivity.$key);
+    this.toast.presentToast(`Successfully unregistered to ${this.activity.name}`);
+    this.navCtrl.pop();
+  }
+
+  cancelPending() {
+    const pendingUser = this.pendingUsers.find(x => x.user_name === this.user.name);
+    this.pendingUserActivitiesProvider.removePendingUser(pendingUser.$key);
+    this.toast.presentToast(`Successfully removed from waiting list of ${this.activity.name}`);
+    this.navCtrl.pop();
+  }
+
   removeActivity() {
     this.activitiesProvider.removeActivity(this.activity.$key);
     this.toast.presentToast(`Successfully deleted ${this.activity.name}`);
     this.navCtrl.pop();
   }
 
+  canRegister() {
+    return !this.isRegistered && !this.isPending && this.activity.max_users > this.registeredUsers.length;
+  }
+
+  canPending() {
+    return !this.isRegistered && !this.isPending && this.activity.max_users <= this.registeredUsers.length;
+  }
+
   ngOnDestroy() {
     if (this.registeredUsersSub) {
       this.registeredUsersSub.unsubscribe();
     }
+    if (this.pendingUsersSub) {
+      this.pendingUsersSub.unsubscribe();
+    }
   }
-
 }

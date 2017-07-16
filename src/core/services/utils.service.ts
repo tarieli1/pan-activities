@@ -26,20 +26,25 @@ export class UtilsService {
     let path = '';
     switch (activityName.toLowerCase()) {
       case 'soccer':
-        path = '../../../assets/img/soccer.jpg';
+        path = 'assets/img/soccer.jpg';
         break;
       case 'pilates':
+        path = 'assets/img/pilates.jpg';
         break;
       case 'hiit':
+        path = 'assets/img/hiit.jpg';
         break;
       case 'ping pong':
+        path = 'assets/img/ping-pong.jpg';
         break;
       case 'running/fitness group':
+        path = 'assets/img/running.jpg';
         break;
       case 'board games':
+        path = 'assets/img/board-games.jpg';
         break;
       default:
-        path = '../../../assets/img/logo.png';
+        path = 'assets/img/pan.jpg';
         break;
     }
 
