@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-navbar>
 		<button ion-button icon-only menuToggle>
-			<ion-icon name="menu"></ion-icon>
+			<ion-icon class="pan-icon" name="menu"></ion-icon>
 		</button>
 		<ion-title>
 			Add Activity
@@ -25,7 +25,7 @@
 			<ion-label stacked>Week Type</ion-label>
 			<ion-select [(ngModel)]="activity.week_type">
 				<ion-option value="Weekly">Weekly</ion-option>
-				<ion-option value="Bi-weekly">Bi-weekly</ion-option>
+				<ion-option value="Bi-weekly">Bi-Weekly</ion-option>
 			</ion-select>
 		</ion-item>
 		<ion-item>
@@ -61,6 +61,10 @@
 		<ion-item>
 			<ion-label stacked>Comments</ion-label>
 			<ion-input type="text" [(ngModel)]="activity.comments"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label stacked>Comment Needed From User</ion-label>
+			<ion-toggle checked="false" [(ngModel)]="activity.comment_needed"></ion-toggle>
 		</ion-item>
 	</ion-list>
 	<div padding>

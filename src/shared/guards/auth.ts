@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
-import { LoginComponent } from "../../pages";
+import { LoginComponent } from '../../pages';
 
 @Injectable()
 export class AuthGuard {

@@ -1,10 +1,10 @@
 export const config = {
   firebaseConfig: {
-    apiKey: 'AIzaSyC5nxjllDIqq_zoi5u7X3tMiTeoB-lSIaQ',
-    authDomain: 'pan-activities.firebaseapp.com',
-    databaseURL: 'https://pan-activities.firebaseio.com',
-    projectId: 'pan-activities',
-    storageBucket: 'pan-activities.appspot.com',
-    messagingSenderId: '425195188130',
+    apiKey: 'AIzaSyBPWpLN9124IMFynN3k7BgNoemxEd9hkXU',
+    authDomain: 'pan-activities-4dec4.firebaseapp.com',
+    databaseURL: 'https://pan-activities-4dec4.firebaseio.com',
+    projectId: 'pan-activities-4dec4',
+    storageBucket: '',
+    messagingSenderId: '403055168500'
   },
 };

@@ -1,8 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
 
-import { UserActivitiesProvider, ActivitiesProvider, UtilsService } from '../../core';
+import { UserActivitiesProvider, ActivitiesProvider, UtilsService, UserProvider } from '../../core';
 import { AuthGuard } from '../../shared';
 import { User, UserActivity } from '../../models';
 import { ActivityComponent } from '../activities';
@@ -15,18 +14,20 @@ export class MyActivitiesComponent implements OnDestroy {
   loading: any;
   userActivitiesSub: any;
   activitySub: any;
+  userSub: any;
   user: User;
   userActivities: UserActivity[];
 
   constructor(
     public navCtrl: NavController,
     public auth: AuthGuard,
-    public storage: Storage,
+    public userProvider: UserProvider,
     public userActivitiesProvider: UserActivitiesProvider,
     public activitiesProvider: ActivitiesProvider,
     public utilsService: UtilsService,
   ) {
-    this.storage.get('user').then((user) => {
+    this.userSub = this.userProvider.user$.subscribe((user) => {
+      if (!user) return;
       this.user = user;
       this.getUserActivities();
     });
@@ -60,6 +61,9 @@ export class MyActivitiesComponent implements OnDestroy {
     }
     if (this.activitySub) {
       this.activitySub.unsubscribe();
+    }
+    if (this.userSub) {
+      this.userSub.unsubscribe();
     }
   }
 

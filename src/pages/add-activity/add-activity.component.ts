@@ -21,6 +21,7 @@ export class AddActivityComponent {
     max_users: 14,
     min_users: 1,
     comments: '',
+    comment_needed: false,
   };
 
   constructor(
@@ -37,6 +38,7 @@ export class AddActivityComponent {
   }
 
   save() {
+    debugger;
     this.loading = this.utilsService.createLoader();
     this.loading.present();
     this.activitiesProvider.addActivity(this.activity);

@@ -4,18 +4,23 @@ import { LoadingController } from 'ionic-angular';
 @Injectable()
 export class UtilsService {
 
-  month: any;
-  now: Date;
-
   constructor(public loadingCtrl: LoadingController) {}
 
+  now: Date = new Date();
+
   get date() {
-    this.now = new Date();
-    this.month = this.now.getMonth() + 1;
-    if (this.month < 10) {
-      this.month = `0${this.month}`;
+    let month: any = this.now.getMonth() + 2;
+    if (month < 10) {
+      month = `0${month}`;
     }
-    return `${this.now.getFullYear()}-${this.month}`;
+    return `${this.now.getFullYear()}-${month}`;
+  }
+
+  get monthName() {
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December',
+    ];
+    return monthNames[this.now.getMonth() + 1];
   }
 
   createLoader() {

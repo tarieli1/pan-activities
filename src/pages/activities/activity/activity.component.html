@@ -1,24 +1,32 @@
 <ion-header>
 	<ion-navbar>
 		<button ion-button icon-only menuToggle>
-			<ion-icon name="menu"></ion-icon>
+			<ion-icon class="pan-icon" name="menu"></ion-icon>
 		</button>
 		<ion-title>
-			{{activity.name}}
+			{{activity.name | camelCase}} - {{activity.week_type | camelCase}}
 		</ion-title>
 	</ion-navbar>
 </ion-header>
 
 <ion-content>
-	<ion-card>
-		<ion-card-content>
-			<ion-card-title>
-				Each {{activity.days}}, {{activity.week_type}}
-				At {{activity.start_time}}
-			</ion-card-title>
-			<p>{{activity.comments}}</p>
-		</ion-card-content>
-	</ion-card>
+	<ion-grid class="activities-data">
+		<ion-row>
+			<ion-col col-4 text-center>
+				<ion-icon name="calendar"></ion-icon>
+				<p>{{activity.days}}</p>
+			</ion-col>
+			<ion-col col-4 text-center>
+				<ion-icon name="time"></ion-icon>
+				<p>{{activity.start_time}} - {{activity.end_time}}</p>
+			</ion-col>
+			<ion-col col-4 text-center>
+				<ion-icon name="warning"></ion-icon>
+				<p>Minimum {{activity.min_users}}</p>
+			</ion-col>
+		</ion-row>
+		<p padding *ngIf="activity.comments"><b>Comments:</b> {{activity.comments}}</p>
+	</ion-grid>
 	<div padding>
 		<button
 			*ngIf="canRegister()"
@@ -67,7 +75,7 @@
 	<ion-list>
 		<ion-item *ngFor="let user of registeredUsers">
 			<ion-avatar item-left>
-				<ion-icon name="contact"></ion-icon>
+				<ion-icon class="pan-icon" name="contact"></ion-icon>
 			</ion-avatar>
 			<h2>{{user.user_name}}</h2>
 		</ion-item>

@@ -4,8 +4,8 @@
 			<button
 				class="pan-menu-button"
 				ion-item
-				*ngFor="let page of pages; let lst = last"
-				[disabled]="!isAdmin && lst"
+				*ngFor="let page of pages"
+				[disabled]="page.role === 'admin' && !isAdmin"
 				(click)="openPage(page)"
 			>{{page.title}}
 			</button>

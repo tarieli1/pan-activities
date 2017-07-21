@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
+import { Push } from '@ionic-native/push';
 
 import { PanActivitiesComponent } from './app.component';
 import {
@@ -48,6 +49,7 @@ const COMPONENTS = [
   providers: [
     StatusBar,
     SplashScreen,
+    Push,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
   ]
 })

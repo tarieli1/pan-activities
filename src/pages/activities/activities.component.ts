@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
 
 import {
   ActivitiesProvider,
@@ -8,6 +7,7 @@ import {
   CsvService,
   EmailService,
   UtilsService,
+  UserProvider,
 } from '../../core';
 import { ActivityComponent } from './activity';
 import { Activity, User } from '../../models';
@@ -23,7 +23,9 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
   isAdmin: boolean = false;
   sub: any;
   usersActivitiesSub: any;
+  userSub: any;
   loading: any;
+  month: string;
 
   constructor(
     public navCtrl: NavController,
@@ -32,8 +34,8 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
     public csvService: CsvService,
     public emailService: EmailService,
     public userActivitiesProvider: UserActivitiesProvider,
-    public storage: Storage,
     public utilsService: UtilsService,
+    public userProvider: UserProvider,
   ) {}
 
   ngOnInit() {
@@ -41,10 +43,12 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
       .subscribe((activities) => {
         this.activities = activities;
       });
-    this.storage.get('user').then((user) => {
+    this.userSub = this.userProvider.user$.subscribe((user) => {
+      if (!user) return;
+      this.isAdmin = user.role === 'admin';
       this.user = user;
-      this.isAdmin = this.user.role === 'admin';
     });
+    this.month = this.utilsService.monthName;
   }
 
   ionViewCanEnter() {
@@ -79,6 +83,9 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
     }
     if (this.usersActivitiesSub) {
       this.sub.usersActivitiesSub();
+    }
+    if (this.userSub) {
+      this.userSub.unsubscribe();
     }
   }
 

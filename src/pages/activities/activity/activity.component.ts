@@ -73,31 +73,35 @@ export class ActivityComponent implements OnDestroy {
   }
 
   onRegister() {
-    const alert = this.alertCtrl.create({
-      title: 'Register',
-      inputs: [
-        {
-          name: 'comments',
-          placeholder: 'Comments',
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: data => {
-            console.log('Cancel clicked');
+    if (this.activity.comment_needed) {
+      const alert = this.alertCtrl.create({
+        title: 'Register',
+        inputs: [
+          {
+            name: 'comments',
+            placeholder: 'Comments',
           }
-        },
-        {
-          text: 'Register',
-          handler: data => {
-            this.register(data.comments);
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: data => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'Register',
+            handler: data => {
+              this.register(data.comments);
+            }
           }
-        }
-      ]
-    });
-    alert.present();
+        ]
+      });
+      alert.present();
+    } else {
+      this.register('');
+    }
   }
 
   register(comments: string) {
@@ -130,9 +134,22 @@ export class ActivityComponent implements OnDestroy {
   }
 
   removeActivity() {
-    this.activitiesProvider.removeActivity(this.activity.$key);
-    this.toast.presentToast(`Successfully deleted ${this.activity.name}`);
-    this.navCtrl.pop();
+    const alert = this.alertCtrl.create({
+      title: 'Are you sure',
+      message: 'you want to delete this activity?',
+      buttons: [
+        { text: 'I regret', role: 'cancel' },
+        {
+          text: 'I am sure',
+          handler: () => {
+            this.activitiesProvider.removeActivity(this.activity.$key);
+            this.toast.presentToast(`Successfully deleted ${this.activity.name}`);
+            this.navCtrl.pop();
+          },
+        }
+      ]
+    });
+    alert.present();
   }
 
   canRegister() {

@@ -10,4 +10,5 @@ export interface Activity {
   max_users: number;
   min_users: number;
   date: string;
+  comment_needed: boolean;
 }
