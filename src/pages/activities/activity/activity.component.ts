@@ -7,9 +7,10 @@ import {
   PendingUserActivitiesProvider,
   UtilsService,
   ToasterService,
+  PushService,
 } from '../../../core';
 import { AuthGuard } from '../../../shared';
-import { User, Activity, UserActivity } from '../../../models';
+import { User, Activity, UserActivity, ActivitiesExpiration } from '../../../models';
 
 @Component({
   templateUrl: 'activity.component.html',
@@ -20,11 +21,13 @@ export class ActivityComponent implements OnDestroy {
   pendingUsersSub: any;
   user: User;
   activity: Activity;
+  expiration: ActivitiesExpiration;
   registeredUsers: UserActivity[] = [];
   pendingUsers: UserActivity[] = [];
   isRegistered: boolean = false;
   isPending: boolean = false;
   isAdmin: boolean = false;
+  now = this.utilsService.nowDate;
 
   constructor(
     public navCtrl: NavController,
@@ -36,9 +39,11 @@ export class ActivityComponent implements OnDestroy {
     public toast: ToasterService,
     public utilsService: UtilsService,
     private alertCtrl: AlertController,
+    private pushService: PushService,
   ) {
     this.activity = this.params.get('activity');
     this.user = this.params.get('user');
+    this.expiration = this.params.get('expiration');
     this.isAdmin = this.user.role === 'admin';
     this.getUsersByActivity();
     this.getPendingUsersByActivity();
@@ -115,6 +120,7 @@ export class ActivityComponent implements OnDestroy {
          you were added to pending list and waiting for
           response from your admin`, false, 5000
       );
+      this.pushService.notifyAdmins(this.user, this.activity);
     }
     this.navCtrl.pop();
   }

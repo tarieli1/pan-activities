@@ -14,7 +14,7 @@
 		<ion-row>
 			<ion-col col-4 text-center>
 				<ion-icon name="calendar"></ion-icon>
-				<p>{{activity.days}}</p>
+				<p>{{activity.days | shortDay}}</p>
 			</ion-col>
 			<ion-col col-4 text-center>
 				<ion-icon name="time"></ion-icon>
@@ -33,6 +33,7 @@
 			block
 			ion-button
 			class="successBtn"
+			[disabled]="expiration.expired < now"
 			(click)="onRegister()"
 		>Register</button>
 	</div>
@@ -42,6 +43,7 @@
 			block
 			ion-button
 			color="light"
+			[disabled]="expiration.expired < now"
 			(click)="cancelRegistration()"
 		>Cancel Registration</button>
 	</div>
@@ -51,6 +53,7 @@
 			block
 			ion-button
 			class="successBtn"
+			[disabled]="expiration.expired < now"
 			(click)="onRegister()"
 		>Register to Waiting List</button>
 	</div>
@@ -60,6 +63,7 @@
 			block
 			ion-button
 			color="light"
+			[disabled]="expiration.expired < now"
 			(click)="cancelPending()"
 		>Cancel Waiting List</button>
 	</div>

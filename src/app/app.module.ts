@@ -14,6 +14,8 @@ import {
   MyActivitiesComponent,
   LoginComponent,
   AddActivityComponent,
+  PendingUsersComponent,
+  PublishActivitiesComponent,
 } from '../pages';
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
@@ -25,6 +27,8 @@ const COMPONENTS = [
   MyActivitiesComponent,
   LoginComponent,
   AddActivityComponent,
+  PendingUsersComponent,
+  PublishActivitiesComponent,
 ];
 
 @NgModule({

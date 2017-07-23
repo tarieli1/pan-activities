@@ -10,12 +10,14 @@ import {
   EmailService,
   ToasterService,
   UtilsService,
+  PushService,
 } from './services';
 import {
   ActivitiesProvider,
   PendingUserActivitiesProvider,
   UserProvider,
   UserActivitiesProvider,
+  ActivitiesExpirationProvider,
 } from './providers';
 
 const SERVICES = [
@@ -23,6 +25,7 @@ const SERVICES = [
   EmailService,
   ToasterService,
   UtilsService,
+  PushService,
 ];
 
 const PROVIDERS = [
@@ -30,6 +33,7 @@ const PROVIDERS = [
   PendingUserActivitiesProvider,
   UserProvider,
   UserActivitiesProvider,
+  ActivitiesExpirationProvider,
 ];
 
 @NgModule({

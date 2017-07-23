@@ -3,8 +3,8 @@
     <button ion-button icon-only menuToggle>
       <ion-icon class="pan-icon" name="menu"></ion-icon>
     </button>
-    <ion-title>
-      My Activities
+    <ion-title (swipe)="changeMonth($event)">
+      My Activities - {{month}}
     </ion-title>
   </ion-navbar>
 </ion-header>

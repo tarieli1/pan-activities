@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { ToasterService } from '../services';
+import { User } from '../../models';
 
 @Injectable()
 export class UserProvider implements OnDestroy {
@@ -25,6 +26,7 @@ export class UserProvider implements OnDestroy {
   userChanged(id: number) {
     this.userSub = this.getUser(id).subscribe((user) => {
       if (user.$exists()) {
+        this.storage.set('userKey', user.$key);
         this.storage.set('user', user);
         this.user$.next(user);
       } else {
@@ -39,7 +41,37 @@ export class UserProvider implements OnDestroy {
 
   logout() {
     this.user$.next(null);
+    this.storage.remove('userKey');
+    this.storage.remove('deviceToken');
     return this.storage.remove('user');
+  }
+
+  updateDeviceToken(user: User) {
+    this.storage.get('deviceToken').then((deviceToken) => {
+      this.storage.get('userKey').then((key) => {
+        const userModel = this.getUser(key);
+        const newUser = Object.assign({ deviceToken }, user);
+        userModel.update(newUser);
+      });
+    });
+  }
+
+  getAdmins() {
+    return this.afd.list('/users', {
+      query: {
+        orderByChild: 'role',
+        equalTo: 'admin',
+      }
+    });
+  }
+
+  getUsers() {
+    return this.afd.list('/users', {
+      query: {
+        orderByChild: 'role',
+        equalTo: 'user',
+      }
+    });
   }
 
   ngOnDestroy() {

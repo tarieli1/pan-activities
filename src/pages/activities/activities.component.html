@@ -3,7 +3,7 @@
     <button ion-button icon-only menuToggle>
       <ion-icon class="pan-icon" name="menu"></ion-icon>
     </button>
-    <ion-title>
+    <ion-title (swipe)="changeMonth($event)">
       Activities - {{month}}
     </ion-title>
   </ion-navbar>
@@ -28,5 +28,9 @@
       (click)="exportToCsv()"
     ><ion-icon name="download"></ion-icon>
     </button>
+  </div>
+  <div padding class="no-data" *ngIf="!activities">
+    <ion-icon name="remove-circle"></ion-icon>
+    <p>There are no activities for this month</p>
   </div>
 </ion-content>

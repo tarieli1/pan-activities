@@ -3,12 +3,15 @@ import { MenuController, Platform, Nav, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
+import { Storage } from '@ionic/storage';
 
 import {
   ActivitiesComponent,
   MyActivitiesComponent,
   LoginComponent,
   AddActivityComponent,
+  PendingUsersComponent,
+  PublishActivitiesComponent,
 } from '../pages';
 import { UserProvider } from '../core';
 import { config } from '../config';
@@ -21,12 +24,12 @@ export class PanActivitiesComponent implements OnDestroy {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = LoginComponent;
-  pages: Array<{ title: string, component: any, role: string }>;
+  pages: Array<{ title: string, component: any }>;
+  adminPages: Array<{ title: string, component: any }>;
   isAdmin = false;
   notificationSub: any;
   errorSub: any;
   registerSub: any;
-
 
   constructor(
       public platform: Platform,
@@ -36,14 +39,19 @@ export class PanActivitiesComponent implements OnDestroy {
       public push: Push,
       public alertCtrl: AlertController,
       public userProvider: UserProvider,
+      public storage: Storage,
   ) {
     this.initializeApp();
 
     // set our app's pages
     this.pages = [
-      { title: 'Activities', component: ActivitiesComponent, role: 'all' },
-      { title: 'My Activities', component: MyActivitiesComponent, role: 'all' },
-      { title: 'Add Activity', component: AddActivityComponent, role: 'admin' },
+      { title: 'Activities', component: ActivitiesComponent },
+      { title: 'My Activities', component: MyActivitiesComponent },
+    ];
+    this.adminPages = [
+      { title: 'Add Activity', component: AddActivityComponent },
+      { title: 'Pending Users', component: PendingUsersComponent },
+      { title: 'Publish Activities', component: PublishActivitiesComponent },
     ];
     this.initUser();
   }
@@ -69,11 +77,15 @@ export class PanActivitiesComponent implements OnDestroy {
     const options: PushOptions = {
       android: {
         senderID: config.firebaseConfig.messagingSenderId,
+        sound: true,
+        vibrate: true,
+        icon: 'drawable-hdpi-icon',
       },
       ios: {
+        senderID: config.firebaseConfig.messagingSenderId,
         alert: 'true',
         badge: true,
-        sound: 'false'
+        sound: true,
       },
       windows: {}
     };
@@ -83,15 +95,16 @@ export class PanActivitiesComponent implements OnDestroy {
     this.notificationSub = pushObject.on('notification').subscribe((notification: any) => {
       if (notification.additionalData.foreground) {
         let youralert = this.alertCtrl.create({
-          title: 'New Push notification',
-          message: notification.message
+          title: notification.title || 'New Notification',
+          message: notification.message,
+          buttons: [{ text: 'Ok', role: 'cancel' }]
         });
         youralert.present();
       }
     });
 
     this.registerSub = pushObject.on('registration').subscribe((registration: any) => {
-      console.log('registration', registration);
+      this.storage.set('deviceToken', registration.registrationId);
     });
 
     this.errorSub = pushObject.on('error').subscribe(error => alert('Error with Push plugin' + error));

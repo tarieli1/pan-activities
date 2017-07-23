@@ -7,4 +7,8 @@ export const config = {
     storageBucket: '',
     messagingSenderId: '403055168500'
   },
+  fcm: {
+    serverKey: 'AAAAXdf1y_Q:APA91bE2f03ufaopwxBqndIBPDCORwlVhWIsLCW65d-JNV8SFJhnFh5ZOpKvZDGD-OJpId277ZCNLKaSRGD3RTOb1V9czqjsXAAnhxAsb1q-mS2_Log47dOvk7-_BC70WxrJFlOAu-tk',
+    url: 'https://fcm.googleapis.com/fcm/send',
+  },
 };

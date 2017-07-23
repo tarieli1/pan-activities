@@ -4,7 +4,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { UtilsService } from '../services';
 
 @Injectable()
-export class ActivitiesProvider {
+export class ActivitiesExpirationProvider {
 
   date: string;
 
@@ -12,8 +12,8 @@ export class ActivitiesProvider {
     this.date = utils.date;
   }
 
-  getActivities() {
-    return this.afd.list('/activities', {
+  getExpiration() {
+    return this.afd.list('/activities_expiration', {
       query: {
         orderByChild: 'date',
         equalTo: this.date,
@@ -21,8 +21,8 @@ export class ActivitiesProvider {
     });
   }
 
-  getActivitiesByDate(date) {
-    return this.afd.list('/activities', {
+  getExpirationByDate(date) {
+    return this.afd.list('/activities_expiration', {
       query: {
         orderByChild: 'date',
         equalTo: date,
@@ -30,15 +30,11 @@ export class ActivitiesProvider {
     });
   }
 
-  getActivity(activityKey: string) {
-    return this.afd.object(`/activities/${activityKey}`);
+  addExpiration(activityExpiration: any) {
+    this.afd.list('/activities_expiration').push(activityExpiration);
   }
 
-  addActivity(activity: any) {
-    this.afd.list('/activities').push(activity);
-  }
-
-  removeActivity(id: string) {
-    this.afd.list('/activities').remove(id);
+  removeExpiration(key: string) {
+    this.afd.list('/activities_expiration').remove(key);
   }
 }

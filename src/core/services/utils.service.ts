@@ -16,11 +16,38 @@ export class UtilsService {
     return `${this.now.getFullYear()}-${month}`;
   }
 
-  get monthName() {
+  get nowDate() {
+    const date = this.date;
+    let day: any = this.now.getDate();
+    if (day < 10) {
+      day = `0${day}`;
+    }
+    return `${date}-${day}`;
+  }
+
+  getMonthName(month = null) {
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December',
     ];
-    return monthNames[this.now.getMonth() + 1];
+    return monthNames[month ? month - 1 : this.now.getMonth() + 1];
+  }
+
+  changeMonth(date: string, op: string) {
+    let month: any = +date.slice(5, 7);
+    let year: any = +date.slice(0, 4);
+    if (month === 12 && op === 'add') {
+      month = 1;
+      year += 1;
+    } else if (month === 1 && op === 'sub') {
+      month = 12;
+      year -= 1;
+    } else {
+      month = op === 'add' ? month += 1 : month -= 1;
+    }
+    if (month < 10) {
+      month = `0${month}`;
+    }
+    return `${year}-${month}`;
   }
 
   createLoader() {

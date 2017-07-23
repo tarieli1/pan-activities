@@ -5,10 +5,17 @@
 				class="pan-menu-button"
 				ion-item
 				*ngFor="let page of pages"
-				[disabled]="page.role === 'admin' && !isAdmin"
 				(click)="openPage(page)"
 			>{{page.title}}
 			</button>
+			<ng-container *ngIf="isAdmin">
+				<button
+					class="pan-menu-button"
+					ion-item
+					*ngFor="let page of adminPages"
+					(click)="openPage(page)"
+				>{{page.title}}</button>
+			</ng-container>
 			<button class="pan-menu-button" ion-item (click)="logout()">Logout</button>
 		</ion-list>
 	</ion-content>

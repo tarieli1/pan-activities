@@ -1,31 +1,43 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { Storage } from '@ionic/storage';
 
 import { UtilsService } from '../services';
-import { User, Activity } from '../../models';
 
 @Injectable()
 export class UserActivitiesProvider {
 
   date: string;
 
-  constructor(public afd: AngularFireDatabase, public utils: UtilsService) {
+  constructor(public afd: AngularFireDatabase, public utils: UtilsService, public storage: Storage) {
     this.date = utils.date;
   }
 
-  register(activity: Activity, user: User, comments: string) {
-    const obj = {
-      comments,
-      date: this.date,
-      activity_key: activity.$key,
-      activity_name: activity.name,
-      user_name: user.name,
-    };
-    this.afd.list('/user_activities').push(obj);
+  register(activity: any, user: any, comments: string = '') {
+    this.storage.get('userKey').then((key) => {
+      const obj = {
+        comments,
+        date: this.date,
+        activity_key: activity.$key,
+        activity_name: activity.name,
+        user_key: key,
+        user_name: user.name,
+      };
+      this.afd.list('/user_activities').push(obj);
+    });
   }
 
   getUserActivities() {
     return this.getUsersActivities();
+  }
+
+  getUserActivitiesByDate(date) {
+    return this.afd.list('/user_activities', {
+      query: {
+        orderByChild: 'date',
+        equalTo: date,
+      }
+    });
   }
 
   getUsersByActivity() {

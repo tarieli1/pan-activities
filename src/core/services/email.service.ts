@@ -14,8 +14,8 @@ export class EmailService {
 
   send(fileEntry: any) {
     let email = {
-      to: 'tarieli1@gmail.com',
-      // cc: 'erika@mustermann.de',
+      to: 'rbenmeir@paloaltonetworks.com',
+      cc: 'ueldad@paloaltonetworks.com',
       attachments: [
         fileEntry.nativeURL,
       ],
@@ -25,5 +25,4 @@ export class EmailService {
     };
     this.email.open(email);
   }
-
 }

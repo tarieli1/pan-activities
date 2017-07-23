@@ -1,0 +1,33 @@
+<ion-header>
+	<ion-navbar>
+		<button ion-button icon-only menuToggle>
+			<ion-icon class="pan-icon" name="menu"></ion-icon>
+		</button>
+		<ion-title>
+			Publish Activities
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-item>
+		<ion-label stacked>Publish Activities For</ion-label>
+		<ion-datetime (ionChange)="onChange()" displayFormat="MMMM YYYY" [(ngModel)]="date"></ion-datetime>
+	</ion-item>
+	<ion-item>
+		<ion-label stacked>Expiration Date</ion-label>
+		<ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="MMM/DD/YYYY" [(ngModel)]="expiredDate"></ion-datetime>
+	</ion-item>
+	<div padding>
+		<button
+			ion-button
+			block
+			color="success"
+			[disabled]="isPublished"
+			(click)="publish()"
+		>PUBLISH</button>
+	</div>
+	<div padding *ngIf="isPublished">
+		<p text-center>Activities for next month already published</p>
+	</div>
+</ion-content>

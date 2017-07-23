@@ -16,8 +16,8 @@ export class AddActivityComponent {
     img: '',
     week_type: 'Weekly',
     days: '',
-    start_time: '',
-    end_time: '',
+    start_time: '18:00',
+    end_time: '19:00',
     max_users: 14,
     min_users: 1,
     comments: '',
@@ -38,7 +38,6 @@ export class AddActivityComponent {
   }
 
   save() {
-    debugger;
     this.loading = this.utilsService.createLoader();
     this.loading.present();
     this.activitiesProvider.addActivity(this.activity);

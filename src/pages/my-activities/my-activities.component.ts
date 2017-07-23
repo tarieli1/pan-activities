@@ -14,9 +14,12 @@ export class MyActivitiesComponent implements OnDestroy {
   loading: any;
   userActivitiesSub: any;
   activitySub: any;
+  activitiesSub: any;
   userSub: any;
   user: User;
   userActivities: UserActivity[];
+  month: string;
+  date = this.utilsService.date;
 
   constructor(
     public navCtrl: NavController,
@@ -31,10 +34,29 @@ export class MyActivitiesComponent implements OnDestroy {
       this.user = user;
       this.getUserActivities();
     });
+    this.month = this.utilsService.getMonthName();
   }
 
   ionViewCanEnter() {
     this.auth.canActivate(this.navCtrl, ['admin', 'user']);
+  }
+
+  changeMonth(event) {
+    this.loading = this.utilsService.createLoader();
+    this.loading.present();
+    // move forward
+    if (event.direction === 2) {
+      this.date = this.utilsService.changeMonth(this.date, 'add');
+    } else if (event.direction === 4) { // move backwards
+      this.date = this.utilsService.changeMonth(this.date, 'sub');
+    }
+    this.activitiesSub = this.userActivitiesProvider.getUserActivitiesByDate(this.date)
+      .subscribe((usersActivities) => {
+        const userActivities = usersActivities.filter(x => x.user_name === this.user.name);
+        this.userActivities = userActivities.length ? userActivities : null;
+        this.month = this.utilsService.getMonthName(+this.date.slice(5, 7));
+        this.loading.dismiss();
+      });
   }
 
   getUserActivities() {
@@ -64,6 +86,9 @@ export class MyActivitiesComponent implements OnDestroy {
     }
     if (this.userSub) {
       this.userSub.unsubscribe();
+    }
+    if (this.activitiesSub) {
+      this.activitiesSub.unsubscribe();
     }
   }
 
