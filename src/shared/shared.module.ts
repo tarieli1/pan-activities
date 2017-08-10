@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 
-import { AuthGuard, CamelCasePipe, DaysPipe } from './';
+import { AuthGuard, CamelCasePipe } from './';
 
 const PIPES = [
   CamelCasePipe,
-  DaysPipe,
 ];
 
 const GUARDS = [

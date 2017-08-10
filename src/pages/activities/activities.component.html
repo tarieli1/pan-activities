@@ -9,16 +9,18 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <ion-item *ngFor="let activity of activities" (click)="enterActivity(activity)">
-      <ion-thumbnail item-left>
-        <img [src]="activity.img || getImg(activity.name)">
-      </ion-thumbnail>
-      <h2>{{activity.name | camelCase}}</h2>
-      <p>{{activity.days}} - {{activity.week_type}}</p>
-    </ion-item>
-  </ion-list>
+<ion-content class="activities">
+  <ion-grid>
+    <ion-row>
+      <ion-col
+        col-5
+        [ngClass]="{ 'even-activity': even }"
+        *ngFor="let activity of activities; let even = even"
+        (click)="enterActivity(activity)"
+      >{{activity.name | camelCase}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <div *ngIf="isAdmin">
     <button
       class="export-btn"

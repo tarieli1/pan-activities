@@ -3,6 +3,7 @@ import { File } from '@ionic-native/file';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
+import { Calendar } from '@ionic-native/calendar';
 
 import { config } from '../config';
 import {
@@ -11,6 +12,7 @@ import {
   ToasterService,
   UtilsService,
   PushService,
+  CalendarService,
 } from './services';
 import {
   ActivitiesProvider,
@@ -26,6 +28,7 @@ const SERVICES = [
   ToasterService,
   UtilsService,
   PushService,
+  CalendarService,
 ];
 
 const PROVIDERS = [
@@ -34,6 +37,9 @@ const PROVIDERS = [
   UserProvider,
   UserActivitiesProvider,
   ActivitiesExpirationProvider,
+  Calendar,
+  File,
+  EmailComposer,
 ];
 
 @NgModule({
@@ -44,8 +50,6 @@ const PROVIDERS = [
   providers: [
     ...SERVICES,
     ...PROVIDERS,
-    File,
-    EmailComposer,
   ],
 })
 export class CoreModule {}

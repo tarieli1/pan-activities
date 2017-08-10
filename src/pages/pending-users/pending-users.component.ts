@@ -33,13 +33,13 @@ export class PendingUsersComponent implements OnInit, OnDestroy {
   }
 
   addUserToActivity(pendingUser: UserActivity) {
-    this.pushService.notifyUser(pendingUser.user_key, pendingUser.activity_name, 'You were successfully added to activity');
+    this.pushService.notifyUser(pendingUser.user_key, `Registration for ${pendingUser.activity_name}`, 'You were successfully added to activity');
     this.userActivitiesProvider.register({ $key: pendingUser.activity_key, name: pendingUser.activity_name }, { $key: pendingUser.user_key, name: pendingUser.user_name });
     this.pendingUsersProvider.removePendingUser(pendingUser.$key);
   }
 
   removeUserFromActivity(pendingUser: UserActivity) {
-    this.pushService.notifyUser(pendingUser.user_key, pendingUser.activity_name, 'Sorry but there was no room this month for this activity, maybe next month');
+    this.pushService.notifyUser(pendingUser.user_key, `Registration for ${pendingUser.activity_name}`, 'Sorry but there was no room this month for this activity, maybe next month');
     this.pendingUsersProvider.removePendingUser(pendingUser.$key);
   }
 

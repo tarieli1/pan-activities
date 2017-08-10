@@ -30,4 +30,12 @@
 	<div padding *ngIf="isPublished">
 		<p text-center>Activities for next month already published</p>
 	</div>
+	<div padding>
+		<button
+			ion-button
+			block
+			color="success"
+			(click)="notifyUsersToAddActivities()"
+		>ADD ACTIVITIES TO CALENDAR</button>
+	</div>
 </ion-content>

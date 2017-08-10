@@ -10,12 +10,12 @@ import { AuthGuard } from '../../shared';
 export class AddActivityComponent {
 
   loading: any;
+  days = [1];
   activity: object = {
     name: '',
     date: this.utilsService.date,
-    img: '',
-    week_type: 'Weekly',
-    days: '',
+    days: [''],
+    location: 'Office',
     start_time: '18:00',
     end_time: '19:00',
     max_users: 14,

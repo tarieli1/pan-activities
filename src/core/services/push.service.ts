@@ -1,7 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 
-import { UserProvider } from '../providers';
+import { UserProvider, UserActivitiesProvider } from '../providers';
+import { UtilsService } from '../services';
 import { config } from '../../config';
 import { User, Activity } from '../../models/';
 
@@ -13,8 +14,15 @@ export class PushService implements OnDestroy {
   usersSub: any;
   userSub: any;
   pushSub: any;
+  userActivitiesSub: any;
+  date: any = this.utilsService.date;
 
-  constructor(public http: Http, public userProvider: UserProvider) {
+  constructor(
+    public http: Http,
+    public userProvider: UserProvider,
+    public userActivitiesProvider: UserActivitiesProvider,
+    public utilsService: UtilsService,
+    ) {
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Authorization', `key=${config.fcm.serverKey}`);
@@ -33,16 +41,16 @@ export class PushService implements OnDestroy {
     });
   }
 
-  notifyUser(userKey: number, activityName: string, message: string) {
+  notifyUser(userKey: number, title: string, body: string) {
     this.userSub = this.userProvider.getUser(userKey).subscribe((user) => {
-      const body = {
+      const data = {
         to: user.deviceToken,
         notification: {
-          title: `Registration for ${activityName}`,
-          body: message,
+          title,
+          body,
         },
       };
-      this.sendPush(body, this.headers);
+      this.sendPush(data, this.headers);
     });
   }
 
@@ -56,6 +64,13 @@ export class PushService implements OnDestroy {
         },
       };
       this.sendPush(body, this.headers);
+    });
+  }
+
+  notifyUsersToAddActivities() {
+    this.userActivitiesSub = this.userActivitiesProvider.getUserActivitiesByDate(this.date)
+      .subscribe((userActivites) => {
+        userActivites.forEach(user => this.notifyUser(user.user_key, 'Add To Calendar', 'Login to the app to add your activities to your calendar'));
     });
   }
 
@@ -76,6 +91,9 @@ export class PushService implements OnDestroy {
     }
     if (this.pushSub) {
       this.pushSub.unsubscribe();
+    }
+    if (this.userActivitiesSub) {
+      this.userActivitiesSub.unsubscribe();
     }
   }
 }

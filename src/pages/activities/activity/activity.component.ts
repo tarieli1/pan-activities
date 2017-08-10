@@ -77,7 +77,20 @@ export class ActivityComponent implements OnDestroy {
       });
   }
 
+  isExpired() {
+    if (this.expiration.expired < this.now) {
+      this.toast.presentToast(`
+        Expiration date for activities actions were until
+        the ${this.expiration.expired}, actions for this month
+        are not allowed any more.`, false, 5000
+      );
+      return true;
+    }
+    return false;
+  }
+
   onRegister() {
+    if (this.isExpired()) return;
     if (this.activity.comment_needed) {
       const alert = this.alertCtrl.create({
         title: 'Register',
@@ -126,6 +139,7 @@ export class ActivityComponent implements OnDestroy {
   }
 
   cancelRegistration() {
+    if (this.isExpired()) return;
     const userActivity = this.registeredUsers.find(x => x.user_name === this.user.name);
     this.userActivitiesProvider.removeUserActivity(userActivity.$key);
     this.toast.presentToast(`Successfully unregistered to ${this.activity.name}`);
@@ -133,6 +147,7 @@ export class ActivityComponent implements OnDestroy {
   }
 
   cancelPending() {
+    if (this.isExpired()) return;
     const pendingUser = this.pendingUsers.find(x => x.user_name === this.user.name);
     this.pendingUserActivitiesProvider.removePendingUser(pendingUser.$key);
     this.toast.presentToast(`Successfully removed from waiting list of ${this.activity.name}`);
@@ -149,6 +164,8 @@ export class ActivityComponent implements OnDestroy {
           text: 'I am sure',
           handler: () => {
             this.activitiesProvider.removeActivity(this.activity.$key);
+            this.userActivitiesProvider.removeUsersFromActivity(this.activity.$key);
+            this.pendingUserActivitiesProvider.removeUsersFromActivity(this.activity.$key);
             this.toast.presentToast(`Successfully deleted ${this.activity.name}`);
             this.navCtrl.pop();
           },

@@ -5,9 +5,9 @@ import { PushService, UtilsService, ActivitiesExpirationProvider } from '../../c
 import { AuthGuard } from '../../shared';
 
 @Component({
-  templateUrl: 'publish-activities.component.html'
+  templateUrl: 'publish.component.html'
 })
-export class PublishActivitiesComponent implements OnInit, OnDestroy {
+export class PublishComponent implements OnInit, OnDestroy {
 
   expiredSub: any;
   changeSub: any;
@@ -44,6 +44,11 @@ export class PublishActivitiesComponent implements OnInit, OnDestroy {
   publish() {
     this.activitiesExpirationProvider.addExpiration({ date: this.date, expired: this.expiredDate });
     this.pushService.notifyUsers(this.expiredDate);
+    this.navCtrl.pop();
+  }
+
+  notifyUsersToAddActivities() {
+    this.pushService.notifyUsersToAddActivities();
     this.navCtrl.pop();
   }
 

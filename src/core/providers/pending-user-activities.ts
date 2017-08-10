@@ -37,6 +37,21 @@ export class PendingUserActivitiesProvider {
     });
   }
 
+  removeUsersFromActivity(activityKey: string) {
+    const userActivities = this.afd.list('/pending_user_activities', {
+      preserveSnapshot: true,
+      query: {
+        orderByChild: 'activity_key',
+        equalTo: activityKey
+      }
+    });
+    userActivities.subscribe(snapshots => {
+      snapshots.forEach(snapshot => {
+        snapshot.ref.remove();
+      });
+    })
+  }
+
   removePendingUser(id: string) {
     this.afd.list('/pending_user_activities').remove(id);
   }

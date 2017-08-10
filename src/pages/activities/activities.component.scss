@@ -9,6 +9,22 @@
 .export-btn.activated {
   background-color: $pan-theme-activated;
 }
-ion-thumbnail img {
-  border-radius: 3px;
+.activities {
+  ion-col {
+    height: 20vh;
+    background-color: #a8c438;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    margin-top: 5px;
+    box-shadow: 1px 2px 5px #171010;
+    text-align: center;
+    font-size: 2em;
+    line-height: 17vh;
+    border-radius: 2px;
+    color: white;
+  }
+  .even-activity {
+    background-color: $orange;
+  }
 }

@@ -18,26 +18,19 @@
 			<ion-input type="text" [(ngModel)]="activity.name"></ion-input>
 		</ion-item>
 		<ion-item>
-			<ion-label stacked>Date</ion-label>
+			<ion-label stacked>Month</ion-label>
 			<ion-datetime displayFormat="MM/YYYY" [(ngModel)]="activity.date"></ion-datetime>
 		</ion-item>
-		<ion-item>
-			<ion-label stacked>Week Type</ion-label>
-			<ion-select [(ngModel)]="activity.week_type">
-				<ion-option value="Weekly">Weekly</ion-option>
-				<ion-option value="Bi-weekly">Bi-Weekly</ion-option>
-			</ion-select>
+		<ion-item *ngFor="let day of days; let i = index; let first = first">
+			<ion-label *ngIf="first" stacked>Dates</ion-label>
+			<ion-datetime
+				[ngClass]="{ 'activity-dates': !first }"
+				displayFormat="DD/MM/YYYY"
+				pickerFormat="D MMMM YYYY"
+				[(ngModel)]="activity.days[i]"
+			></ion-datetime>
 		</ion-item>
-		<ion-item>
-			<ion-label stacked>Days</ion-label>
-			<ion-select [(ngModel)]="activity.days" multiple="true">
-				<ion-option value="Sunday">Sunday</ion-option>
-				<ion-option value="Monday">Monday</ion-option>
-				<ion-option value="Tuesday">Tuesday</ion-option>
-				<ion-option value="Wednesday">Wednesday</ion-option>
-				<ion-option value="Thursday">Thursday</ion-option>
-			</ion-select>
-		</ion-item>
+		<button class="add-day-btn" round ion-button (click)="days.push(1)">+</button>
 		<ion-item>
 			<ion-label stacked>Start Time</ion-label>
 			<ion-input type="time" [(ngModel)]="activity.start_time"></ion-input>
@@ -47,16 +40,19 @@
 			<ion-input type="time" [(ngModel)]="activity.end_time"></ion-input>
 		</ion-item>
 		<ion-item>
+			<ion-label stacked>Location</ion-label>
+			<ion-select [(ngModel)]="activity.location">
+				<ion-option value="Office">Office</ion-option>
+				<ion-option value="Goal-Time">Goal Time</ion-option>
+			</ion-select>
+		</ion-item>
+		<ion-item>
 			<ion-label stacked>Max Users</ion-label>
 			<ion-input type="number" [(ngModel)]="activity.max_users"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label stacked>Min Users</ion-label>
 			<ion-input type="number" [(ngModel)]="activity.min_users"></ion-input>
-		</ion-item>
-		<ion-item>
-			<ion-label stacked>Img Url</ion-label>
-			<ion-input type="text" [(ngModel)]="activity.img"></ion-input>
 		</ion-item>
 		<ion-item>
 			<ion-label stacked>Comments</ion-label>

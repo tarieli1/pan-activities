@@ -106,10 +106,6 @@ export class ActivitiesComponent implements OnInit, OnDestroy {
     this.navCtrl.push(ActivityComponent, { activity, user: this.user, expiration: this.expiration });
   }
 
-  getImg(name: string) {
-    return this.utilsService.getActivityImage(name);
-  }
-
   ngOnDestroy() {
     if (this.sub) {
       this.sub.unsubscribe();

@@ -40,6 +40,21 @@ export class UserActivitiesProvider {
     });
   }
 
+  removeUsersFromActivity(activityKey: string) {
+    const userActivities = this.afd.list('/user_activities', {
+      preserveSnapshot: true,
+      query: {
+        orderByChild: 'activity_key',
+        equalTo: activityKey
+      }
+    });
+    userActivities.subscribe(snapshots => {
+      snapshots.forEach(snapshot => {
+        snapshot.ref.remove();
+      });
+    })
+  }
+
   getUsersByActivity() {
     return this.getUsersActivities();
   }

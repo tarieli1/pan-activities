@@ -20,6 +20,7 @@
         "@angular/http": "4.1.0",
         "@angular/platform-browser": "4.1.0",
         "@angular/platform-browser-dynamic": "4.1.0",
+        "@ionic-native/calendar": "^4.1.0",
         "@ionic-native/core": "3.7.0",
         "@ionic-native/email-composer": "^3.10.3",
         "@ionic-native/file": "^3.10.3",
@@ -29,6 +30,7 @@
         "@ionic/storage": "2.0.1",
         "angularfire2": "^4.0.0-rc0",
         "cordova-android": "^6.2.3",
+        "cordova-plugin-calendar": "^4.6.0",
         "cordova-plugin-compat": "^1.1.0",
         "cordova-plugin-console": "^1.0.5",
         "cordova-plugin-device": "^1.1.4",
@@ -67,7 +69,8 @@
             "cordova-plugin-email": {},
             "phonegap-plugin-push": {
                 "SENDER_ID": "403055168500"
-            }
+            },
+            "cordova-plugin-calendar": {}
         },
         "platforms": [
             "android"

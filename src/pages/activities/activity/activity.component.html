@@ -4,7 +4,7 @@
 			<ion-icon class="pan-icon" name="menu"></ion-icon>
 		</button>
 		<ion-title>
-			{{activity.name | camelCase}} - {{activity.week_type | camelCase}}
+			{{activity.name | camelCase}}
 		</ion-title>
 	</ion-navbar>
 </ion-header>
@@ -13,8 +13,8 @@
 	<ion-grid class="activities-data">
 		<ion-row>
 			<ion-col col-4 text-center>
-				<ion-icon name="calendar"></ion-icon>
-				<p>{{activity.days | shortDay}}</p>
+				<ion-icon name="compass"></ion-icon>
+				<p>{{activity.location}}</p>
 			</ion-col>
 			<ion-col col-4 text-center>
 				<ion-icon name="time"></ion-icon>
@@ -22,59 +22,17 @@
 			</ion-col>
 			<ion-col col-4 text-center>
 				<ion-icon name="warning"></ion-icon>
-				<p>Minimum {{activity.min_users}}</p>
+				<p>Min {{activity.min_users}} - Max {{activity.max_users}}</p>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-12 text-center>
+				<ion-icon name="calendar"></ion-icon>
+				<p>{{activity.days}}</p>
 			</ion-col>
 		</ion-row>
 		<p padding *ngIf="activity.comments"><b>Comments:</b> {{activity.comments}}</p>
 	</ion-grid>
-	<div padding>
-		<button
-			*ngIf="canRegister()"
-			block
-			ion-button
-			class="successBtn"
-			[disabled]="expiration.expired < now"
-			(click)="onRegister()"
-		>Register</button>
-	</div>
-	<div padding>
-		<button
-			*ngIf="isRegistered && !isPending"
-			block
-			ion-button
-			color="light"
-			[disabled]="expiration.expired < now"
-			(click)="cancelRegistration()"
-		>Cancel Registration</button>
-	</div>
-	<div padding>
-		<button
-			*ngIf="canPending()"
-			block
-			ion-button
-			class="successBtn"
-			[disabled]="expiration.expired < now"
-			(click)="onRegister()"
-		>Register to Waiting List</button>
-	</div>
-	<div padding>
-		<button
-			*ngIf="isPending && !isRegistered"
-			block
-			ion-button
-			color="light"
-			[disabled]="expiration.expired < now"
-			(click)="cancelPending()"
-		>Cancel Waiting List</button>
-	</div>
-	<div padding *ngIf="isAdmin">
-		<button
-			block
-			ion-button
-			color="danger"
-			(click)="removeActivity()"
-		>Delete Activity</button>
-	</div>
 	<h5 *ngIf="registeredUsers && registeredUsers.length" padding>Registered</h5>
 	<ion-list>
 		<ion-item *ngFor="let user of registeredUsers">
@@ -84,4 +42,54 @@
 			<h2>{{user.user_name}}</h2>
 		</ion-item>
 	</ion-list>
+	<ion-fab bottom right>
+		<button ion-fab mini><ion-icon name="add"></ion-icon></button>
+		<ion-fab-list side="top">
+			<button
+				*ngIf="isAdmin"
+				ion-fab
+				color="danger"
+				(click)="removeActivity()"
+			>
+				<ion-icon name="trash"></ion-icon>
+				<div class="label">Delete Activity</div>
+			</button>
+			<button
+				*ngIf="canRegister()"
+				ion-fab
+				class="successBtn"
+				(click)="onRegister()"
+			>
+				<ion-icon name="log-in"></ion-icon>
+				<div class="label">Register</div>
+			</button>
+			<button
+				*ngIf="isRegistered && !isPending"
+				ion-fab
+				color="light"
+				(click)="cancelRegistration()"
+			>
+				<ion-icon name="log-out"></ion-icon>
+				<div class="label">Cancel Registration</div>
+			</button>
+			<button
+				*ngIf="canPending()"
+				ion-fab
+				class="successBtn"
+				(click)="onRegister()"
+			>
+				<ion-icon name="log-in"></ion-icon>
+				<div class="label">Register to Waiting List</div>
+			</button>
+			<button
+				*ngIf="isPending && !isRegistered"
+				ion-fab
+				color="light"
+				(click)="cancelPending()"
+			>
+				<ion-icon name="log-out"></ion-icon>
+				<div class="label">Cancel Waiting List</div>
+			</button>
+		</ion-fab-list>
+	</ion-fab>
 </ion-content>

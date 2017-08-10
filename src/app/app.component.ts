@@ -11,9 +11,9 @@ import {
   LoginComponent,
   AddActivityComponent,
   PendingUsersComponent,
-  PublishActivitiesComponent,
+  PublishComponent,
 } from '../pages';
-import { UserProvider } from '../core';
+import { UserProvider, CalendarService } from '../core';
 import { config } from '../config';
 
 @Component({
@@ -40,6 +40,7 @@ export class PanActivitiesComponent implements OnDestroy {
       public alertCtrl: AlertController,
       public userProvider: UserProvider,
       public storage: Storage,
+      public calendarService: CalendarService,
   ) {
     this.initializeApp();
 
@@ -51,7 +52,7 @@ export class PanActivitiesComponent implements OnDestroy {
     this.adminPages = [
       { title: 'Add Activity', component: AddActivityComponent },
       { title: 'Pending Users', component: PendingUsersComponent },
-      { title: 'Publish Activities', component: PublishActivitiesComponent },
+      { title: 'Publish', component: PublishComponent },
     ];
     this.initUser();
   }
@@ -93,7 +94,9 @@ export class PanActivitiesComponent implements OnDestroy {
     const pushObject: PushObject = this.push.init(options);
 
     this.notificationSub = pushObject.on('notification').subscribe((notification: any) => {
-      if (notification.additionalData.foreground) {
+      if (notification.title === 'Add To Calendar') {
+        this.calendarService.addActivities();
+      } else if (notification.additionalData.foreground) {
         let youralert = this.alertCtrl.create({
           title: notification.title || 'New Notification',
           message: notification.message,
